@@ -1,0 +1,29 @@
+extends layout
+
+include utils
+
+append head
+  script(src="/javascripts/demo.js" type="module" defer)
+  link(rel="stylesheet" href="/stylesheets/user-login.css")
+
+
+block content
+  div.mainPage
+    div.left-column
+      a.left-logo(href="/")
+        img.left-logo-img(src='../images/logo-text.png')
+    div.right-column
+      //- a.sign-up-btn(href="/users/signup") Sign up for free
+      div.welcome-text Been here before? Welcome back!
+      div.log-in-field
+        +validationErrorSummary(errors)
+        form(action='/users/login' method='post' id="login-form")
+            input(type='hidden' name='_csrf' value=csrfToken)
+            +field('', 'email', email, required)
+            +field('', 'password', null, 'password', required)
+            div.buttons
+              button(type='submit' id='button-login') Login
+              div: a#button-cancel(href='/') Cancel
+    div.footer
+      button(type='submit' class='demo-user') Demo User
+      div: a#button-sign-up(href='/users/signup') Don't have an account?
